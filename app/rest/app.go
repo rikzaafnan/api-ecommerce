@@ -3,9 +3,11 @@ package rest
 import (
 	"api-ecommerce/config"
 	"api-ecommerce/database"
+	"api-ecommerce/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
+	"gorm.io/gorm"
 )
 
 func StartApp() {
@@ -19,7 +21,7 @@ func StartApp() {
 	route := gin.Default()
 
 	testRoute(route)
-	// userRoute(route, db)
+	userRoute(route, db)
 
 	route.Run(config.SERVERPORT)
 
@@ -30,22 +32,23 @@ func testRoute(route *gin.Engine) {
 	route.GET("/ping")
 }
 
-func userRoute(route *gin.Engine) {
+func userRoute(route *gin.Engine, db *gorm.DB) {
 
-	// userRepository := userpg.NewUserPG(db)
-	// userService := service.NewUserService(userRepository)
-	// userHandler := NewUserhandler(userService)
-	// authService := service.NewAuthService(userRepository)
+	userRepository := user.NewRepositoryUser(db)
+	userService := user.NewServiceUser(userRepository)
 
-	// // no jwt
-	// routeGroup := route.Group("/users")
+	userHandler := NewUserhandler(userService)
 
-	// routeGroup.POST("/register", userHandler.Register)
-	// routeGroup.POST("/login", userHandler.Login)
+	// no jwt
+	routeGroup := route.Group("/users")
+	routeGroup.POST("/register", userHandler.RegisterUser)
+	routeGroup.POST("/login", userHandler.Login)
 
 	// routerGroupWithJWT := route.Group("/users")
 	// routerGroupWithJWT.Use(authService.Authentication())
 	// routerGroupWithJWT.PUT("/:userID", userHandler.Update)
 	// routerGroupWithJWT.DELETE("/:userID", userHandler.Delete)
 	// routerGroupWithJWT.GET("/me", userHandler.Me)
+	// routerGroupWithJWT.PUT("/verification", userHandler.Me)
+
 }

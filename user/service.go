@@ -11,7 +11,7 @@ type ServiceUser interface {
 	Login(input Logininput) (User, error)
 	IsEmailAvailable(input CheckEmailInput) (bool, error)
 	// SaveAvatar(ID int, fileLocation string) (User, error)
-	GetUserByID(Id int) (User, error)
+	// GetUserByID(Id int) (User, error)
 }
 
 type serviceUserImpl struct {
