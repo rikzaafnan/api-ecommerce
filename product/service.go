@@ -68,8 +68,6 @@ func (s *serviceProductImpl) Update(productID int, input ProductInput) (Product,
 		return product, err
 	}
 
-	fmt.Println("kesini kah?")
-
 	product.Name = input.Name
 	product.Description = input.Description
 	product.Amount = input.Amount
