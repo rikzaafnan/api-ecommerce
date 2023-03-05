@@ -63,18 +63,30 @@ func (s *serviceProductImpl) FindByID(productID int) (Product, error) {
 func (s *serviceProductImpl) Update(productID int, input ProductInput) (Product, error) {
 	var product Product
 
+	product, err := s.repositoryProduct.FindByID(productID)
+	if err != nil {
+		return product, err
+	}
+
+	fmt.Println("kesini kah?")
+
 	product.Name = input.Name
 	product.Description = input.Description
 	product.Amount = input.Amount
 	product.Quantity = input.Quantity
 
-	product, err := s.repositoryProduct.Update(productID, product)
+	product, err = s.repositoryProduct.Update(productID, product)
 	if err != nil {
 		return product, err
 	}
 
 	if product.ID == 0 {
 		return product, errors.New("failed update product")
+	}
+
+	product, err = s.repositoryProduct.FindByID(productID)
+	if err != nil {
+		return product, err
 	}
 
 	return product, nil

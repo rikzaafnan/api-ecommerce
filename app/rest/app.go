@@ -91,6 +91,7 @@ func productRoute(route *gin.Engine, db *gorm.DB) {
 	routerGroupWithJWT.Use(middleware.JWTMiddleware(authService, userService))
 	routerGroupWithJWT.GET("", productHandler.FindAll)
 	routerGroupWithJWT.GET("/:productID", productHandler.FindByID)
+	routerGroupWithJWT.Use(middleware.RoleMiddleware("admin"))
 	routerGroupWithJWT.POST("", productHandler.Create)
 	routerGroupWithJWT.PUT("/:productID", productHandler.Update)
 	routerGroupWithJWT.DELETE("/:productID", productHandler.Delete)
