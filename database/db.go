@@ -2,6 +2,7 @@ package database
 
 import (
 	"api-ecommerce/config"
+	"api-ecommerce/product"
 	"api-ecommerce/user"
 	"fmt"
 	"log"
@@ -45,5 +46,5 @@ func InitializeDB() *gorm.DB {
 // }
 
 func autoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&user.User{})
+	db.AutoMigrate(&user.User{}, &product.Product{})
 }

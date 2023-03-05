@@ -6,6 +6,7 @@ import (
 	"api-ecommerce/database"
 	"api-ecommerce/handler"
 	"api-ecommerce/middleware"
+	"api-ecommerce/product"
 	"api-ecommerce/user"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,7 @@ func StartApp() {
 	testRoute(route)
 	userRoute(route, db)
 	testRoutePakeJWT(route, db)
+	productRoute(route, db)
 
 	route.Run(config.SERVERPORT)
 
@@ -81,13 +83,17 @@ func productRoute(route *gin.Engine, db *gorm.DB) {
 
 	userService := user.NewServiceUser(userRepository)
 
+	productRepository := product.NewRepositoryProduct(db)
+	productService := product.NewServiceProduct(productRepository)
+	productHandler := handler.NewProducthandler(productService)
+
 	routerGroupWithJWT := route.Group("/products")
 	routerGroupWithJWT.Use(middleware.JWTMiddleware(authService, userService))
-	// routerGroupWithJWT.GET("", productHandler.FindAll)
-	// routerGroupWithJWT.GET("/:productID", productHandler.FindByID)
-	// routerGroupWithJWT.POST("", productHandler.Create)
-	// routerGroupWithJWT.PUT("/:productID", productHandler.Update)
-	// routerGroupWithJWT.DELETE("/:productID", userHandler.Delete)
+	routerGroupWithJWT.GET("", productHandler.FindAll)
+	routerGroupWithJWT.GET("/:productID", productHandler.FindByID)
+	routerGroupWithJWT.POST("", productHandler.Create)
+	routerGroupWithJWT.PUT("/:productID", productHandler.Update)
+	routerGroupWithJWT.DELETE("/:productID", productHandler.Delete)
 
 }
 
