@@ -4,6 +4,8 @@ import (
 	"math/rand"
 	"time"
 	"unsafe"
+
+	"github.com/go-playground/validator/v10"
 )
 
 type Response struct {
@@ -58,4 +60,14 @@ func RandomString(n int) string {
 	}
 
 	return *(*string)(unsafe.Pointer(&b))
+}
+
+func FormatValidationError(err error) []string {
+	var errors []string
+
+	for _, e := range err.(validator.ValidationErrors) {
+		errors = append(errors, e.Error())
+	}
+
+	return errors
 }

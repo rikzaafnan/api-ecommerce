@@ -40,9 +40,9 @@ func InitializeDB() *gorm.DB {
 	return db
 }
 
-func GetDB() *gorm.DB {
-	return db
-}
+// func GetDB() *gorm.DB {
+// 	return db
+// }
 
 func autoMigrate(db *gorm.DB) {
 	db.AutoMigrate(&user.User{})

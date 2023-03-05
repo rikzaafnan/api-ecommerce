@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -35,8 +34,6 @@ func LoadENV() LoadEnv {
 	portDB := os.Getenv("PORT_DATABASE")
 	environtment := os.Getenv("ENVIRONTMENT")
 	jwtToken := os.Getenv("JWT_SECRET_KEY")
-
-	fmt.Println("ini username from env : ", usernameDB)
 
 	loadENv := LoadEnv{
 		USERNAMEDB:   usernameDB,

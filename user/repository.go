@@ -1,12 +1,17 @@
 package user
 
-import "gorm.io/gorm"
+import (
+	"fmt"
+
+	"gorm.io/gorm"
+)
 
 type RepositoryUser interface {
 	Save(user User) (User, error)
 	FindByEmail(email string) (User, error)
 	FindByID(ID int) (User, error)
 	Update(user User) (User, error)
+	PatchIsVerification(email string) error
 }
 
 type repositoryUserImpl struct {
@@ -35,6 +40,8 @@ func (r *repositoryUserImpl) FindByEmail(email string) (User, error) {
 
 	err := r.db.Where("email = ?", email).Find(&user).Error
 	if err != nil {
+		fmt.Println(err)
+
 		return user, err
 	}
 
@@ -61,5 +68,16 @@ func (r *repositoryUserImpl) Update(user User) (User, error) {
 	}
 
 	return user, nil
+
+}
+
+func (r *repositoryUserImpl) PatchIsVerification(email string) error {
+
+	err := r.db.Model(&User{}).Where("email = ?", email).Update("is_verification", 1).Error
+	if err != nil {
+		return err
+	}
+
+	return nil
 
 }
