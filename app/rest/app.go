@@ -6,6 +6,7 @@ import (
 	"api-ecommerce/database"
 	"api-ecommerce/handler"
 	"api-ecommerce/middleware"
+	"api-ecommerce/payment"
 	"api-ecommerce/product"
 	"api-ecommerce/transaction"
 	"api-ecommerce/user"
@@ -28,6 +29,7 @@ func StartApp() {
 	testRoutePakeJWT(route, db)
 	productRoute(route, db)
 	transactionRoute(route, db)
+	paymentRoute(route, db)
 
 	route.Run(config.SERVERPORT)
 
@@ -115,8 +117,31 @@ func transactionRoute(route *gin.Engine, db *gorm.DB) {
 
 	routerGroupWithJWT := route.Group("/users/:userID/transactions")
 	routerGroupWithJWT.Use(middleware.JWTMiddleware(authService, userService))
+	routerGroupWithJWT.Use(middleware.UserLoginMiddleware())
 	routerGroupWithJWT.GET("", transactionHandler.FindAll)
 	routerGroupWithJWT.GET("/:transactionID", transactionHandler.FindByID)
 	routerGroupWithJWT.POST("", transactionHandler.Create)
+
+}
+
+func paymentRoute(route *gin.Engine, db *gorm.DB) {
+
+	authService := auth.NewService()
+	userRepository := user.NewRepositoryUser(db)
+
+	userService := user.NewServiceUser(userRepository)
+
+	transactionRepository := transaction.NewRepositoryTransaction(db)
+
+	paymentRepository := payment.NewRepositoryPayment(db)
+	paymentService := payment.NewServicePayment(paymentRepository, transactionRepository)
+	paymentHandler := handler.Newpaymenthandler(paymentService)
+
+	routerGroupWithJWT := route.Group("/users/:userID/payments")
+	routerGroupWithJWT.Use(middleware.JWTMiddleware(authService, userService))
+	routerGroupWithJWT.Use(middleware.UserLoginMiddleware())
+	routerGroupWithJWT.GET("", paymentHandler.FindAll)
+	routerGroupWithJWT.GET("/:paymentID", paymentHandler.FindByID)
+	routerGroupWithJWT.POST("", paymentHandler.Create)
 
 }

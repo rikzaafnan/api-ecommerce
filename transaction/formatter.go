@@ -2,6 +2,7 @@ package transaction
 
 type TransactionFormatter struct {
 	ID                 int                          `json:"id"`
+	UserID             int                          `json:"useriID"`
 	Name               string                       `json:"name"`
 	Email              string                       `json:"email"`
 	Code               string                       `json:"code"`
@@ -25,6 +26,7 @@ func FormatTransaction(transaction Transaction, transactionDetail []TransactionD
 
 	formatter := TransactionFormatter{
 		ID:                 transaction.ID,
+		UserID:             transaction.UserID,
 		Name:               transaction.Name,
 		Email:              transaction.Email,
 		Code:               transaction.Code,
@@ -39,14 +41,22 @@ func FormatTransaction(transaction Transaction, transactionDetail []TransactionD
 }
 
 type TransactionDetailFormatter struct {
-	ID        int `json:"id"`
-	ProductID int `json:"productId"`
+	ID           int    `json:"id"`
+	ProductID    int    `json:"productId"`
+	ProductName  string `json:"productName"`
+	Quantity     int    `json:"quantity"`
+	ProductPrice int    `json:"productPrice"`
+	TotalAmount  int    `json:"totalAmount"`
 }
 
 func FormatTransactionDetail(transactionDetail TransactionDetail) TransactionDetailFormatter {
 	formatter := TransactionDetailFormatter{
-		ID:        transactionDetail.ID,
-		ProductID: transactionDetail.ProductID,
+		ID:           transactionDetail.ID,
+		ProductID:    transactionDetail.ProductID,
+		ProductName:  transactionDetail.ProductName,
+		Quantity:     transactionDetail.Quantity,
+		ProductPrice: transactionDetail.ProductPrice,
+		TotalAmount:  transactionDetail.TotalAmount,
 	}
 
 	return formatter

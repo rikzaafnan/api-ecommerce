@@ -1,5 +1,9 @@
-#API Ecommerce
-
+# API Ecommerce
+    import (transvision.postman_collection.json) to postman
+    copy .env.example and rename to .env
+    go mod download
+    go mod tidy
+    go run main.go
 
 ### tech stack
     language : Golang

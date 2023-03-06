@@ -2,6 +2,7 @@ package database
 
 import (
 	"api-ecommerce/config"
+	"api-ecommerce/payment"
 	"api-ecommerce/product"
 	"api-ecommerce/transaction"
 	"api-ecommerce/user"
@@ -47,5 +48,5 @@ func InitializeDB() *gorm.DB {
 // }
 
 func autoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&user.User{}, &product.Product{}, &transaction.Transaction{}, &transaction.TransactionDetail{})
+	db.AutoMigrate(&user.User{}, &product.Product{}, &transaction.Transaction{}, &transaction.TransactionDetail{}, &payment.Payment{})
 }

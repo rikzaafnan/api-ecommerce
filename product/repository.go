@@ -33,7 +33,7 @@ func (r *repositoryProductImpl) Save(product Product) (Product, error) {
 func (r *repositoryProductImpl) FindByID(ID int) (Product, error) {
 	var product Product
 
-	err := r.db.Where("id = ?", ID).Find(&product).Error
+	err := r.db.Where("id = ?", ID).First(&product).Error
 	if err != nil {
 
 		return product, err

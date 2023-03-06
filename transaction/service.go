@@ -4,7 +4,6 @@ import (
 	"api-ecommerce/helper"
 	"api-ecommerce/product"
 	"errors"
-	"fmt"
 )
 
 type ServiceTransaction interface {
@@ -25,40 +24,46 @@ func NewServiceTransaction(repositoryTransaction RepositoryTransaction, reposito
 func (s *serviceTransactionImpl) Save(userID int, input TransactionInput) (Transaction, error) {
 	var transaction Transaction
 
-	fmt.Println("ini service create transaction")
-
-	var totalAmount = 0
+	var totalTransaction = 0
 	var transactionDetails []TransactionDetail
 
-	for _, productDetail := range input.ProductDetails {
+	for index, productDetail := range input.ProductDetails {
+		var totalAmount = 0
 
 		var transactionDetail TransactionDetail
 
-		product, err := s.repositoryProduct.FindByID(productDetail.ProductID)
+		var product product.Product
+
+		product, err := s.repositoryProduct.FindByID(input.ProductDetails[index].ProductID)
 		if err != nil {
 			return transaction, errors.New("product not found")
 		}
 
 		totalAmount = productDetail.Quantity * product.Amount
 		transactionDetail.ProductID = product.ID
+		transactionDetail.Quantity = productDetail.Quantity
+		transactionDetail.ProductName = product.Name
+		transactionDetail.ProductPrice = product.Amount
+		transactionDetail.TotalAmount = totalAmount
 
+		totalTransaction = totalTransaction + totalAmount
 		transactionDetails = append(transactionDetails, transactionDetail)
 
 	}
 
+	transaction.UserID = userID
 	transaction.Name = input.Name
+	transaction.Email = input.Email
 	transaction.Code = helper.RandomString(10)
 	transaction.Address = input.Address
 	transaction.TransactionStatus = "pending"
-	transaction.TransactionTotal = totalAmount
+	transaction.TransactionTotal = totalTransaction
 	transaction.TransactionDetails = transactionDetails
 
-	fmt.Println(transactionDetails)
-
-	// transaction, err := s.repositoryTransaction.Save(transaction)
-	// if err != nil {
-	// 	return transaction, err
-	// }
+	transaction, err := s.repositoryTransaction.Save(transaction)
+	if err != nil {
+		return transaction, err
+	}
 
 	return transaction, nil
 

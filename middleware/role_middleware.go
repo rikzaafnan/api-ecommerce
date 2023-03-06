@@ -3,8 +3,8 @@ package middleware
 import (
 	"api-ecommerce/helper"
 	"api-ecommerce/user"
-	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -31,48 +31,24 @@ func RoleMiddleware(roles ...string) gin.HandlerFunc {
 			return
 		}
 
-		// authHeader := c.GetHeader("Authorization")
+	}
 
-		// if !strings.Contains(authHeader, "Bearer") {
-		// 	response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
-		// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-		// 	return
-		// }
+}
 
-		// tokenString := ""
-		// // untuk memisahkan antara bearer dan token
-		// arraytoken := strings.Split(authHeader, " ")
-		// if len(arraytoken) == 2 {
-		// 	tokenString = arraytoken[1]
-		// }
+func UserLoginMiddleware() gin.HandlerFunc {
 
-		// token, err := authService.ValidateToken(tokenString)
-		// if err != nil {
-		// 	response := helper.APIResponse(err.Error(), http.StatusUnauthorized, "error", nil)
-		// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-		// 	return
-		// }
+	return func(c *gin.Context) {
 
-		// claim, ok := token.Claims.(jwt.MapClaims)
-		// if !ok || !token.Valid {
-		// 	response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
-		// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-		// 	return
-		// }
+		currentUser := c.MustGet("currentUser").(user.User)
 
-		// userID := int(claim["user_id"].(float64))
+		paramUserID := c.Param("userID")
+		userID, _ := strconv.Atoi(paramUserID)
 
-		// user, err := userService.GetUserByID(userID)
-		// if err != nil {
-		// 	response := helper.APIResponse("Unauthorized", http.StatusUnauthorized, "error", nil)
-		// 	c.AbortWithStatusJSON(http.StatusUnauthorized, response)
-		// 	return
-		// }
-
-		// // menyimpan data di set untuk bisa dipakai di file manapun
-		// c.Set("currentUser", user)
-
-		fmt.Println("melewati role middleware")
+		if currentUser.ID != userID {
+			response := helper.APIResponse("user not permission", http.StatusUnauthorized, "error", nil)
+			c.AbortWithStatusJSON(http.StatusUnauthorized, response)
+			return
+		}
 
 	}
 

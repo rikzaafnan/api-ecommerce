@@ -1,0 +1,715 @@
+{
+	"info": {
+		"_postman_id": "1d2ac8ae-fc52-4b22-ba71-db390ddec39c",
+		"name": "transvision",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14587702"
+	},
+	"item": [
+		{
+			"name": "transvision",
+			"item": [
+				{
+					"name": "users",
+					"item": [
+						{
+							"name": "login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"password\" :\"cobacoba\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register user",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"coba@gmail.com\",\r\n    \"name\" :\"coba 1\",\r\n    \"password\" :\"cobacoba\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "register user admin",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"name\" :\"admin\",\r\n    \"password\" :\"cobacoba\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/register-by-pass",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"register-by-pass"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user vrification",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"name\" :\"admin\",\r\n    \"password\" :\"cobacoba\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/verification?email=coba@gmail.com",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"verification"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "coba@gmail.com"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "me",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/me",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"me"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "product",
+					"item": [
+						{
+							"name": "find all products",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"sabun\",\r\n    \"description\": \"ini sabun\",\r\n    \"amount\": 10000,\r\n    \"quantity\":5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"sabun2\",\r\n    \"description\": \"ini sabun yg di update kah\",\r\n    \"amount\": 1000,\r\n    \"quantity\":4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/products/2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"products",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "transactions",
+					"item": [
+						{
+							"name": "find all transactions",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/1/transactions?user_id=2",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"1",
+										"transactions"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/1/transactions/12",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"1",
+										"transactions",
+										"12"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"orang 1\",\r\n    \"address\": \"ini address\",\r\n    \"email\": \"emailPembeli@mail.com\",\r\n    \"transactionTotal\": 100,\r\n    \"productDetails\": [\r\n\r\n        {\r\n            \"productID\" : 1,\r\n            \"quantity\" : 2   \r\n        },\r\n        {\r\n            \"productID\" : 3,\r\n            \"quantity\" : 1   \r\n        }\r\n\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/1/transactions",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"1",
+										"transactions"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "payment",
+					"item": [
+						{
+							"name": "create",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"trxCode\" : \"BlSBXk9Le7\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/2/payments",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"2",
+										"payments"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "paymets",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/2/payments?user_id=1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"2",
+										"payments"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:9797/users/2/payments/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "9797",
+									"path": [
+										"users",
+										"2",
+										"payments",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "test jwt",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyYW5kb20tc3RyaW5nIjoidms2czI1dGdrenpJeEU4T2RucGpxRFVuSyIsInVzZXJfaWQiOjJ9.6cqJXj1h3BNl3bqJrMdfE1Nj6UlJl4qt7nqfLZvDOAA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"admin@gmail.com\",\r\n    \"name\" :\"admin\",\r\n    \"password\" :\"cobacoba\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:9797/test/with-jwt?email=coba@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9797",
+							"path": [
+								"test",
+								"with-jwt"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "coba@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
