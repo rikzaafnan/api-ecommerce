@@ -1,0 +1,54 @@
+# ini contoh, yg aslki ada di folder Docker/Dockerfile
+
+#################################
+# STEP 1 build executable binary
+#################################
+FROM golang:alpine as build
+
+LABEL maintainer="Afnan"
+
+LABEL version="v1"
+
+RUN apk update && apk add --no-cache git
+
+# 3. grab deps and build
+WORKDIR /src/app/api-ecommerce
+COPY . .
+
+RUN go mod download && go mod tidy
+RUN go mod verify
+
+
+RUN go build -o api-ecommerce.sh
+
+
+#################################
+# STEP 1 build scratch image
+#################################
+#FROM scratch
+FROM alpine
+
+WORKDIR /app/api-ecommerce
+
+# next-upload file
+RUN mkdir /app/upload-file
+
+COPY --from=build /src/app/api-ecommerce .
+
+# Logging
+ARG LOG_DIR=/app
+#RUN mkdir -p ${LOG_DIR}
+ENV LOG_FILE_LOCATION=${LOG_DIR}/api-ecommerce.log
+
+# Env variables as needed
+ARG apm=xxx
+ARG enviro=local
+ENV ENVIRONTMENT_ENV=$enviro
+
+# ENTRYPOINT ["/app/api-ecommerce"]
+CMD ["./api-ecommerce.sh"]
+
+
+
+
+

@@ -1,14 +1,17 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
 
 var (
-	SERVERPORT = ":9797"
+	SERVERPORT         = ":9797"
+	ENVIRONTMENT_LOCAL = "local"
 )
 
 type LoadEnv struct {
@@ -32,8 +35,18 @@ func LoadENV() LoadEnv {
 	schemaDB := os.Getenv("SCHEMA_DATABASE")
 	hostDB := os.Getenv("HOST_DATABASE")
 	portDB := os.Getenv("PORT_DATABASE")
-	environtment := os.Getenv("ENVIRONTMENT")
+	environtment := os.Getenv("ENVIRONTMENT_ENV")
 	jwtToken := os.Getenv("JWT_SECRET_KEY")
+
+	if strings.ToLower(environtment) == strings.ToLower(ENVIRONTMENT_LOCAL) {
+		usernameDB = os.Getenv("USERNAME_DATABASE_DB_LOCAL")
+		passwordDB = os.Getenv("PASSWORD_DATABASE_DB_LOCAL")
+		schemaDB = os.Getenv("SCHEMA_DATABASE_DB_LOCAL")
+		hostDB = os.Getenv("HOST_DATABASE_DB_LOCAL")
+		portDB = os.Getenv("PORT_DATABASE_DB_LOCAL")
+	}
+
+	fmt.Println(environtment)
 
 	loadENv := LoadEnv{
 		USERNAMEDB:   usernameDB,

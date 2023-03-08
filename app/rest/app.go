@@ -5,11 +5,16 @@ import (
 	"api-ecommerce/config"
 	"api-ecommerce/database"
 	"api-ecommerce/handler"
+	"api-ecommerce/helper"
 	"api-ecommerce/middleware"
 	"api-ecommerce/payment"
 	"api-ecommerce/product"
 	"api-ecommerce/transaction"
 	"api-ecommerce/user"
+	"fmt"
+	"net/http"
+	"path/filepath"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/labstack/gommon/log"
@@ -24,6 +29,8 @@ func StartApp() {
 
 	route := gin.Default()
 
+	route.Static("/images", "./upload-files/images")
+	// route.Static("/uploads", "./upload-files")
 	testRoute(route)
 	userRoute(route, db)
 	testRoutePakeJWT(route, db)
@@ -37,7 +44,50 @@ func StartApp() {
 
 func testRoute(route *gin.Engine) {
 
-	route.GET("/ping")
+	route.GET("/ping", func(c *gin.Context) {
+
+		c.JSON(http.StatusOK, "ping success")
+	})
+
+	route.MaxMultipartMemory = 8 << 20 // 8 MiB
+
+	groupVersion := route.Group("/api/v1")
+	groupVersion.POST("/upload", func(c *gin.Context) {
+		name := c.PostForm("name")
+		module := c.PostForm("module")
+		email := c.PostForm("email")
+
+		// Source
+		file, err := c.FormFile("file")
+		if err != nil {
+
+			c.JSON(http.StatusBadRequest, err.Error())
+			return
+
+		}
+
+		filename := filepath.Base(file.Filename)
+		fileNameUPdate := fmt.Sprintf("%d-%s", time.Now().UnixNano(), filename)
+		pathDestination := "upload-files/images/" + fileNameUPdate
+
+		if err := c.SaveUploadedFile(file, pathDestination); err != nil {
+
+			c.JSON(http.StatusBadRequest, err.Error())
+			return
+
+		}
+
+		// response := fmt.Sprintf("File %s uploaded successfully with fields name=%s and email=%s and module=%s.", file.Filename, name, email, module)
+		response := helper.APIResponse("success send picture", http.StatusOK, "success", map[string]string{
+			"filename": file.Filename,
+			"name":     name,
+			"email":    email,
+			"module":   module,
+			"path":     pathDestination,
+		})
+
+		c.JSON(http.StatusOK, response)
+	})
 }
 
 func testRoutePakeJWT(route *gin.Engine, db *gorm.DB) {
