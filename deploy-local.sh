@@ -22,6 +22,6 @@ echo "LOCAL: docker run images"
 # docker run -d -e PORT=9797  -p 38989:9797 --name api-ecommerce-golang -v D:/interview/backend/transvision/coba-upload-file:/app/upload-file  api-ecommerce-golang-images
 
 # unutk folder di dalam aplikasi
-docker run -d -e PORT=9797  -p 38989:9797 --name api-ecommerce-golang -v D:/interview/backend/transvision/coba-upload-file:/app/api-ecommerce/upload-files/images  api-ecommerce-golang-images
+docker run -d -e PORT=9797  -p 38989:9797 --name api-ecommerce-golang -v D:/interview/backend/transvision/coba-upload-file:/app/api-ecommerce/upload-files  api-ecommerce-golang-images
 
 echo "ok"

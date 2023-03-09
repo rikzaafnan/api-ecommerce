@@ -51,7 +51,7 @@ ssh dev@codethusiast.my.id -p 30004 'pwd'
 echo "ls -l"
 ssh dev@codethusiast.my.id -p 30004 'ls -l'
 
-ssh dev@codethusiast.my.id -p 30004 'sudo -S docker run -d --net mysql_staging_apps -e PORT=9797 -p 38989:9797 --name  api-ecommerce-golang -v /home/contoh-upload-files:/app/api-ecommerce/upload-files/images  api-ecommerce-golang'
+ssh dev@codethusiast.my.id -p 30004 'sudo -S docker run -d --net mysql_staging_apps -e PORT=9797 -p 38989:9797 --name  api-ecommerce-golang -v /home/contoh-upload-files:/app/api-ecommerce/upload-files  api-ecommerce-golang'
 echo "end run docker container"
 
 #ssh dev@codethusiast.my.id -p 30004 'docker run -d --net docker_job2go_test_db  api-ecommerce-golang --name  api-ecommerce-golang'
