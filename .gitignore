@@ -1,3 +1,2 @@
 .env
-deploy-local.sh
-deploy-staging.sh
+.sh
