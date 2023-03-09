@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -41,6 +40,7 @@ func LoadENV() LoadEnv {
 	portDB := os.Getenv("PORT_DATABASE")
 	environtment := os.Getenv("ENVIRONTMENT_ENV")
 	jwtToken := os.Getenv("JWT_SECRET_KEY")
+	BASE_URL = "http://test-api.codethusiast.my.id"
 
 	if strings.EqualFold(environtment, ENVIRONTMENT_LOCAL) {
 		usernameDB = os.Getenv("USERNAME_DATABASE_DB_LOCAL")
@@ -48,9 +48,8 @@ func LoadENV() LoadEnv {
 		schemaDB = os.Getenv("SCHEMA_DATABASE_DB_LOCAL")
 		hostDB = os.Getenv("HOST_DATABASE_DB_LOCAL")
 		portDB = os.Getenv("PORT_DATABASE_DB_LOCAL")
+		BASE_URL = "http://localhost:9797"
 	}
-
-	fmt.Println(environtment)
 
 	loadENv := LoadEnv{
 		USERNAMEDB:   usernameDB,

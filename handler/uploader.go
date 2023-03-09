@@ -6,15 +6,16 @@ import (
 	"api-ecommerce/helper"
 	"api-ecommerce/user"
 	"fmt"
-	"github.com/gabriel-vasile/mimetype"
-	"github.com/gin-gonic/gin"
-	"github.com/pkg/errors"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"net/http"
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/gabriel-vasile/mimetype"
+	"github.com/gin-gonic/gin"
+	"github.com/pkg/errors"
+	log "github.com/sirupsen/logrus"
 )
 
 type uploaderHandler struct {
@@ -37,7 +38,7 @@ func (h *uploaderHandler) Save(c *gin.Context) {
 	// Source
 	file, err := c.FormFile("file")
 	if err != nil {
-
+		log.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 
@@ -45,7 +46,7 @@ func (h *uploaderHandler) Save(c *gin.Context) {
 
 	dataFile, err := file.Open()
 	if err != nil {
-
+		log.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 
@@ -55,7 +56,7 @@ func (h *uploaderHandler) Save(c *gin.Context) {
 
 	m, err := validateUploader(currentUser.ID, module, dataFile)
 	if err != nil {
-
+		log.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 
@@ -66,7 +67,7 @@ func (h *uploaderHandler) Save(c *gin.Context) {
 	pathDestination := "upload-files/images/" + module + "/" + buildFileName
 
 	if err := c.SaveUploadedFile(file, pathDestination); err != nil {
-
+		log.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 
@@ -81,7 +82,7 @@ func (h *uploaderHandler) Save(c *gin.Context) {
 
 	attachment, err := h.attachmentService.Save(input)
 	if err != nil {
-
+		log.Error(err)
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 

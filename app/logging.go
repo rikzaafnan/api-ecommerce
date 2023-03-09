@@ -6,6 +6,7 @@ import (
 	"path"
 	"runtime"
 	"strings"
+	"time"
 
 	nested "github.com/antonfisher/nested-logrus-formatter"
 	log "github.com/sirupsen/logrus"
@@ -54,8 +55,8 @@ type LocalFormatter struct {
 }
 
 func (u LocalFormatter) Format(e *log.Entry) ([]byte, error) {
-	// e.Time = e.Time.Add(time.Hour * 7)
-	e.Time = e.Time.Local()
+	e.Time = e.Time.Add(time.Hour * 7)
+	// e.Time = e.Time.Local()
 	return u.Formatter.Format(e)
 }
 
