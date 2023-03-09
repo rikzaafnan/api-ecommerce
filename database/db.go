@@ -1,14 +1,15 @@
 package database
 
 import (
+	common "api-ecommerce/common/uploader"
 	"api-ecommerce/config"
 	"api-ecommerce/payment"
 	"api-ecommerce/product"
 	"api-ecommerce/transaction"
 	"api-ecommerce/user"
 	"fmt"
-	"log"
 
+	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -34,8 +35,13 @@ func InitializeDB() *gorm.DB {
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", username_db, password_db, host_db, port_db, database_db)
 
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
 	if err != nil {
-		log.Fatal(err.Error())
+		log.Errorf("env:%s", config.LoadENV().ENVIRONTMENT)
+		log.Errorf("cs:%s", config.LoadENV().HOSTDB)
+		s := fmt.Sprintf("cant connect to db on %v:%v", config.LoadENV().HOSTDB, config.LoadENV().PORTDB)
+		log.Fatal(s)
+		return db
 	}
 
 	autoMigrate(db)
@@ -48,5 +54,5 @@ func InitializeDB() *gorm.DB {
 // }
 
 func autoMigrate(db *gorm.DB) {
-	db.AutoMigrate(&user.User{}, &product.Product{}, &transaction.Transaction{}, &transaction.TransactionDetail{}, &payment.Payment{})
+	db.AutoMigrate(&user.User{}, &product.Product{}, &transaction.Transaction{}, &transaction.TransactionDetail{}, &payment.Payment{}, &common.Attachment{})
 }

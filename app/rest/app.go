@@ -2,6 +2,7 @@ package rest
 
 import (
 	"api-ecommerce/auth"
+	common "api-ecommerce/common/uploader"
 	"api-ecommerce/config"
 	"api-ecommerce/database"
 	"api-ecommerce/handler"
@@ -17,7 +18,8 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/labstack/gommon/log"
+	"github.com/go-co-op/gocron"
+	log "github.com/sirupsen/logrus"
 	"gorm.io/gorm"
 )
 
@@ -25,9 +27,11 @@ func StartApp() {
 
 	db := database.InitializeDB()
 
-	log.Info(db)
-
+	// route := gin.New()
 	route := gin.Default()
+	route.SetTrustedProxies(nil)
+	route.Use(middleware.Logger())
+	// route.Use(middleware.LoggingMiddlewareCustomTesting())
 
 	route.Static("/images", "./upload-files/images")
 	// route.Static("/uploads", "./upload-files")
@@ -37,6 +41,9 @@ func StartApp() {
 	productRoute(route, db)
 	transactionRoute(route, db)
 	paymentRoute(route, db)
+	uploaderRoute(route, db)
+
+	initScheduler()
 
 	route.Run(config.SERVERPORT)
 
@@ -194,4 +201,45 @@ func paymentRoute(route *gin.Engine, db *gorm.DB) {
 	routerGroupWithJWT.GET("/:paymentID", paymentHandler.FindByID)
 	routerGroupWithJWT.POST("", paymentHandler.Create)
 
+}
+
+func uploaderRoute(route *gin.Engine, db *gorm.DB) {
+	authService := auth.NewService()
+	userRepository := user.NewRepositoryUser(db)
+
+	userService := user.NewServiceUser(userRepository)
+
+	attachmentRepository := common.NewRepositoryAttachment(db)
+	attachmentService := common.NewServiceAttachment(attachmentRepository)
+	uploaderHandler := handler.NewUploaderhandler(attachmentService)
+
+	routerGroupWithJWT := route.Group("/uploads")
+	routerGroupWithJWT.Use(middleware.JWTMiddleware(authService, userService))
+	routerGroupWithJWT.POST("", uploaderHandler.Save)
+	routerGroupWithJWT.DELETE("/:uploaderID", uploaderHandler.Deleted)
+}
+
+// schedulerEvery5Minutes.StartAsync()
+// schedulerEvery5Minutes := gocron
+// _, err = schedulerEvery5Minutes.Every(5).Minute().StartAt(time.Now().UTC()).Do(func() {
+// 	go kunyitTransactionServiceNoAggregate.TransactionStatusSyncToKINI(apps.RC)
+// })
+// if err != nil {
+// 	log.Error(err)
+// }
+// schedulerEvery5Minutes
+
+func initScheduler() {
+	// testing cronjob
+	log.Info("ini jam local : ", time.Now())
+	schedulerEvery5Minutes := gocron.NewScheduler(time.Now().Location())
+	_, err := schedulerEvery5Minutes.Every(5).Minute().StartAt(time.Now()).Do(func() {
+		// go kunyitTransactionServiceNoAggregate.TransactionStatusSyncToKINI(apps.RC)
+		log.Info("ini jalanin cronjob")
+	})
+
+	if err != nil {
+		log.Error(err)
+	}
+	schedulerEvery5Minutes.StartAsync()
 }

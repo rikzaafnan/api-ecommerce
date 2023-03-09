@@ -10,8 +10,12 @@ import (
 )
 
 var (
-	SERVERPORT         = ":9797"
-	ENVIRONTMENT_LOCAL = "local"
+	SERVERPORT              = ":9797"
+	ENVIRONTMENT_LOCAL      = "local"
+	ENVIRONTMENT_PRODUCTION = "production"
+	ENVIRONTMENT_TESTING    = "testing"
+	ENVIRONTMENT_STAGING    = "staging"
+	BASE_URL                = "http://localhost:9797"
 )
 
 type LoadEnv struct {
@@ -38,7 +42,7 @@ func LoadENV() LoadEnv {
 	environtment := os.Getenv("ENVIRONTMENT_ENV")
 	jwtToken := os.Getenv("JWT_SECRET_KEY")
 
-	if strings.ToLower(environtment) == strings.ToLower(ENVIRONTMENT_LOCAL) {
+	if strings.EqualFold(environtment, ENVIRONTMENT_LOCAL) {
 		usernameDB = os.Getenv("USERNAME_DATABASE_DB_LOCAL")
 		passwordDB = os.Getenv("PASSWORD_DATABASE_DB_LOCAL")
 		schemaDB = os.Getenv("SCHEMA_DATABASE_DB_LOCAL")

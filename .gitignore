@@ -1,2 +1,4 @@
 .env
 *.sh
+tmp/
+upload-files/

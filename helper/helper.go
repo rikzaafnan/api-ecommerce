@@ -2,6 +2,7 @@ package helper
 
 import (
 	"math/rand"
+	"strings"
 	"time"
 	"unsafe"
 
@@ -70,4 +71,25 @@ func FormatValidationError(err error) []string {
 	}
 
 	return errors
+}
+
+func BuildFileName(userID string, fileExtension string) string {
+	now := time.Now().UTC().Format("20060102150405")
+	return userID + "-" + now + "-" + RandomString(6) + fileExtension
+}
+
+/*
+
+untuk mengecek suatu string dengan array
+
+*/
+func IsIn(key string, enums []string) bool {
+	var b bool
+	for _, v := range enums {
+		if strings.EqualFold(v, key) {
+			b = true
+		}
+	}
+
+	return b
 }
