@@ -2,3 +2,5 @@
 *.sh
 tmp/
 upload-files/
+/tmp
+/.idea/
